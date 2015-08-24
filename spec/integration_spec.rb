@@ -15,4 +15,13 @@ describe('employee tracker app', {:type => :feature}) do
     end
   end
 
+  describe('the update division path') do
+    it('allows the user to update a division') do
+      joy_division = Division.create({:name => 'Joy'})
+      visit("/divisions/#{joy_division.id()}")
+      fill_in('division', :with => 'New Order')
+      click_button('Update')
+      expect(page).to have_content('New Order')
+    end
+  end
 end
