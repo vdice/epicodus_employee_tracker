@@ -1,0 +1,7 @@
+require("sinatra")
+require("sinatra/reloader")
+require('sinatra/activerecord')
+require('pg')
+also_reload("lib/**/*.rb")
+require('./lib/division')
+require('./lib/employee')

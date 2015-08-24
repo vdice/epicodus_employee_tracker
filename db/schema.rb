@@ -17,12 +17,16 @@ ActiveRecord::Schema.define(version: 20150824184627) do
   enable_extension "plpgsql"
 
   create_table "divisions", force: :cascade do |t|
-    t.string "name"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "employees", force: :cascade do |t|
-    t.string  "name"
-    t.integer "division_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "division_id"
   end
 
 end
