@@ -24,4 +24,15 @@ describe('employee tracker app', {:type => :feature}) do
       expect(page).to have_content('New Order')
     end
   end
+  describe('the delete division path') do
+    it('allows the user to delete the division') do
+      delete_division = Division.create({:name => 'Random'})
+      visit("/divisions/#{delete_division.id()}")
+      click_button('Destroy')
+      expect(page).to have_content('Employee Tracker')
+      expect(page).to_not have_content('Random')
+    end
+  end
+
+
 end

@@ -32,3 +32,10 @@ patch('/divisions/:id') do
   @division.update({:name => name})
   erb(:division)
 end
+
+delete('/divisions/:id') do
+  Division.find(params.fetch('id').to_i).destroy()
+
+  @divisions = Division.all()
+  erb(:index)
+end
