@@ -15,10 +15,18 @@
     </form>
 </p>
 
-<h2>Destroy Devision</h2>
+<h2>Destroy Division</h2>
 
 <form action="/divisions/<%= @division.id %>" method="post">
   <input type="hidden" name="_method" value="delete">
 
   <button type="submit" class="btn">Destroy</button>
 </form>
+
+<h2>Here are all of your employees:</h2>
+
+<ul>
+  <% @division.employees.each() do |employee| %>
+  <li> <%= employee.name() %> </li>
+  <% end %>
+</ul>

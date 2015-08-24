@@ -23,20 +23,22 @@
   <button name="button" class="btn" type="submit">Submit</button>
 </form>
 
-<% if !@employees.nil? && @employees.any?() %>
+<% if @employees.any?() %>
   <p>
     Here are all your employees:
   </p>
 
   <ul>
     <% @employees.each() do |employee| %>
-      <li><%= employee.name() %>, Division: <%= employee.division().name() %></li>
+      <li><%= employee.name() %><% unless employee.division().nil? %>, Division: <%= employee.division().name() %><% end %>
+      </li>
     <% end %>
   </ul>
+
 <% else %>
-<p>
-  You don't have any employees yet!
-</p>
+  <p>
+    You don't have any employees yet!
+  </p>
 <% end %>
 
 <p>

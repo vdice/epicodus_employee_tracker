@@ -48,5 +48,6 @@ delete('/divisions/:id') do
   Division.find(params.fetch('id').to_i).destroy()
 
   @divisions = Division.all()
+  @employees = Employee.all()
   erb(:index)
 end

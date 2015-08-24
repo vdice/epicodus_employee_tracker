@@ -46,7 +46,12 @@ describe('employee tracker app', {:type => :feature}) do
     end
   end
 
-
-
-
+  describe('the division listing its employees path') do
+    it('allows a user to see all of the employees for a specific division') do
+      joy_division = Division.create({:name => 'Joy'})
+      homer = Employee.create({:name => 'Homer', :division_id => joy_division.id()})
+      visit("/divisions/#{joy_division.id()}")
+      expect(page).to have_content(homer.name())    
+    end
+  end
 end
