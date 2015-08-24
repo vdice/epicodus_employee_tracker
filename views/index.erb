@@ -52,7 +52,7 @@
 
 
     <label for="division">Division</label>
-    <select id="division_select" name="division_select" type="text" class="form-control">
+    <select id="division_select" name="division_select" type="text" class="form-control" required>
       <% @divisions.each() do |division| %>
         <option id="option_<%= division.id() %>" value="<%= division.id() %>"><%= division.name() %></option>
       <% end %>

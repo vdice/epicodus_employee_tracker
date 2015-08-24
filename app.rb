@@ -21,7 +21,7 @@ post('/') do
     Division.create({:name => name})
   end
 
-  if (params.has_key?('employee'))
+  if (params.has_key?('employee') && params.has_key?('division_select'))
     employee_name = params.fetch('employee')
     division_id = params.fetch('division_select').to_i
     employee = Employee.create({:name => employee_name, :division_id => division_id})
