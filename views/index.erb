@@ -10,18 +10,52 @@
   <% @divisions.each() do |division| %>
     <li><a href="/divisions/<%= division.id %>"><%= division.name %></a></li>
   <% end %>
-
-
 </ul>
 
 <p>
   Please enter your division here:
 </p>
 <form action="/" method="post">
-<div class="form-group">
-<label for="name">New Division Name:</label>
-<input type="text" name="name" id="name" class="form-control">
-</div>
-<button name="button" class="btn" type="submit">Submit</button>
+  <div class="form-group">
+  <label for="name">New Division Name:</label>
+  <input type="text" name="name" id="name" class="form-control">
+  </div>
+  <button name="button" class="btn" type="submit">Submit</button>
+</form>
 
+<% if !@employees.nil? && @employees.any?() %>
+  <p>
+    Here are all your employees:
+  </p>
+
+  <ul>
+    <% @employees.each() do |employee| %>
+      <li><%= employee.name() %>, Division: <%= employee.division().name() %></li>
+    <% end %>
+  </ul>
+<% else %>
+<p>
+  You don't have any employees yet!
+</p>
+<% end %>
+
+<p>
+  Please enter new employee details here:
+</p>
+
+<form action="/" method="post">
+  <div class="form-group">
+    <label for="employee">Name</label>
+    <input type="text" name="employee" id="employee" class="form-control">
+
+
+    <label for="division">Division</label>
+    <select id="division_select" name="division_select" type="text" class="form-control">
+      <% @divisions.each() do |division| %>
+        <option id="option_<%= division.id() %>" value="<%= division.id() %>"><%= division.name() %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <button type="submit">Create</button>
 </form>

@@ -24,6 +24,7 @@ describe('employee tracker app', {:type => :feature}) do
       expect(page).to have_content('New Order')
     end
   end
+
   describe('the delete division path') do
     it('allows the user to delete the division') do
       delete_division = Division.create({:name => 'Random'})
@@ -33,6 +34,19 @@ describe('employee tracker app', {:type => :feature}) do
       expect(page).to_not have_content('Random')
     end
   end
+
+  describe('create and update employee path') do
+    it('allows a user to create an employee') do
+      joy_division = Division.create({:name => 'Joy'})
+      visit('/')
+      fill_in('employee', :with => 'Homer')
+      find('#division_select').find("#option_#{joy_division.id()}").select_option
+      click_button('Create')
+      expect(page).to have_content('Homer, Division: Joy')
+    end
+  end
+
+
 
 
 end

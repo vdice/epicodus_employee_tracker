@@ -8,14 +8,25 @@ require('./lib/employee')
 
 get('/') do
   @divisions = Division.all()
+  @employees = Employee.all()
   erb(:index)
 end
 
 post('/') do
-  name = params.fetch('name')
-  Division.create({:name => name})
-
   @divisions = Division.all()
+  @employees = Employee.all()
+
+  if (params.has_key?('name'))
+    name = params.fetch('name')
+    Division.create({:name => name})
+  end
+
+  if (params.has_key?('employee'))
+    employee_name = params.fetch('employee')
+    division_id = params.fetch('division_select').to_i
+    employee = Employee.create({:name => employee_name, :division_id => division_id})
+  end
+
   erb(:index)
 end
 
