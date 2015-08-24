@@ -1,0 +1,27 @@
+<center>
+  <h1>Employee Tracker</h1>
+</center>
+
+<p>
+  Here are all your divisions:
+</p>
+
+<ul>
+  <% @divisions.each() do |division| %>
+    <li><%= division.name %></li>
+  <% end %>
+
+
+</ul>
+
+<p>
+  Please enter your division here:
+</p>
+<form action="/" method="post">
+<div class="form-group">
+<label for="name">New Division Name:</label>
+<input type="text" name="name" id="name" class="form-control">
+</div>
+<button name="button" class="btn" type="submit">Submit</button>
+
+</form>
