@@ -5,10 +5,12 @@ require('pg')
 also_reload("lib/**/*.rb")
 require('./lib/division')
 require('./lib/employee')
+require('./lib/project')
 
 get('/') do
   @divisions = Division.all()
   @employees = Employee.all()
+  @projects = Project.all()
   erb(:index)
 end
 
@@ -49,5 +51,17 @@ delete('/divisions/:id') do
 
   @divisions = Division.all()
   @employees = Employee.all()
-  erb(:index)
+  redirect('/')
+end
+
+get('/projects/') do
+  @projects = Project.all()
+  erb(:projects)
+end
+
+post('/projects') do
+  name = params.fetch('project')
+  project = Project.create({:name => name})
+  @projects = Project.all()
+  erb(:projects)
 end

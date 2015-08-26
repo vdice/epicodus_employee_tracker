@@ -51,7 +51,16 @@ describe('employee tracker app', {:type => :feature}) do
       joy_division = Division.create({:name => 'Joy'})
       homer = Employee.create({:name => 'Homer', :division_id => joy_division.id()})
       visit("/divisions/#{joy_division.id()}")
-      expect(page).to have_content(homer.name())    
+      expect(page).to have_content(homer.name())
+    end
+  end
+
+  describe('create a project') do
+    it('names a project') do
+      visit("/projects/")
+      fill_in('project', :with => 'Active Record Many to Many')
+      click_button('Save')
+      expect(page).to have_content('Active Record Many to Many')
     end
   end
 end

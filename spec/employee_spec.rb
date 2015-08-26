@@ -8,4 +8,25 @@ require("spec_helper")
         expect(test_employee.division()).to(eq(test_division))
       end
     end
+
+    describe("#project") do
+      it('shows which project an employee is assigned to') do
+      test_project = Project.create({:name => 'epicodus employee tracker'})
+      test_division = Division.create({:name => 'ruby class'})
+      test_employee = Employee.create({:name => 'Vaughn', :project_id => test_project.id(), :division_id => test_division.id()})
+      expect(test_employee.project()).to(eq(test_project))
+      expect(test_employee.division()).to(eq(test_division))
+    end
   end
+
+  describe("#update") do
+    it('can remove an employee from a project') do
+      test_project = Project.create({:name => 'epicodus employee tracker'})
+      test_division = Division.create({:name => 'ruby class'})
+      test_employee = Employee.create({:name => 'Vaughn', :project_id => test_project.id(), :division_id => test_division.id()})
+      test_employee.update({:project_id => 'null'})
+      expect(test_employee.project()).to(eq(nil))
+      expect(test_project.employees()).to(eq([]))
+    end
+  end
+end

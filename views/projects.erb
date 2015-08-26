@@ -1,0 +1,20 @@
+<p>
+  Here are all your prjects:
+</p>
+
+<ul>
+  <% @projects.each() do |project| %>
+    <li><a href="/projects/<%= project.id %>"><%= project.name %></a></li>
+  <% end %>
+</ul>
+
+<p>
+  Please enter your project here:
+</p>
+<form action="/projects" method="post">
+  <div class="form-group">
+  <label for="project">New Project Name:</label>
+  <input type="text" name="project" id="project" class="form-control">
+  </div>
+  <button name="button" class="btn" type="submit">Save</button>
+</form>

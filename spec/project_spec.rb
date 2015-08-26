@@ -9,5 +9,5 @@ describe(Project) do
       employee2 = Employee.create({:name => 'Lenny', :division_id => division.id(), :project_id => project.id()})
       expect(project.employees()).to(eq([employee1, employee2]))
     end
-  end
+  end  
 end
