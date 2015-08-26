@@ -38,7 +38,7 @@
 
   <ul>
     <% @employees.each() do |employee| %>
-      <% if employee.project_id().eql?(@project.id()) %>
+      <% if employee.project_ids().eql?([@project.id()]) %>
         <li><%= employee.name() %></li>
       <% end %>
     <% end %>

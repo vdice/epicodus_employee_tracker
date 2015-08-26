@@ -9,12 +9,15 @@ require("spec_helper")
       end
     end
 
-    describe("#project") do
-      it('shows which project an employee is assigned to') do
+    describe("#projects") do
+      it('shows which projects an employee is assigned and vice versa') do
       test_project = Project.create({:name => 'epicodus employee tracker'})
       test_division = Division.create({:name => 'ruby class'})
-      test_employee = Employee.create({:name => 'Vaughn', :project_id => test_project.id(), :division_id => test_division.id()})
-      expect(test_employee.project()).to(eq(test_project))
+      test_employee = Employee.create({:name => 'Vaughn', :division_id => test_division.id(), :project_ids => [test_project.id()]})
+      # test_employee.projects.push(test_project)
+      expect(test_employee.project_ids()).to(eq([test_project.id()]))
+      # test_project.employees.push(test_employee)
+      expect(test_project.employees()).to(eq([test_employee]))
       expect(test_employee.division()).to(eq(test_division))
     end
   end
@@ -23,15 +26,15 @@ require("spec_helper")
     it('can remove an employee from a project') do
       test_project = Project.create({:name => 'epicodus employee tracker'})
       test_division = Division.create({:name => 'ruby class'})
-      test_employee = Employee.create({:name => 'Vaughn', :project_id => test_project.id(), :division_id => test_division.id()})
+      test_employee = Employee.create({:name => 'Vaughn', :division_id => test_division.id()})
 
-      test_employee.update({:project_id => 'null'})
-      expect(test_employee.project()).to(eq(nil))
+      test_employee.update({:project_ids => []})
+      expect(test_employee.project_ids()).to(eq([]))
       expect(test_project.employees()).to(eq([]))
 
-      test_employee.update({:project_id => test_project.id()})
+      test_employee.update({:project_ids => [test_project.id()]})
       test_project = Project.find(test_project.id())
-      expect(test_employee.project()).to(eq(test_project))
+      expect(test_employee.project_ids()).to(eq([test_project.id()]))
       expect(test_project.employees()).to(eq([test_employee]))
     end
   end
