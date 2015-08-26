@@ -79,10 +79,16 @@ delete('/projects/:id') do
   redirect('/projects')
 end
 
+delete('/projects/:id/boot') do
+  @employee = Employee.find(params.fetch('employee_id').to_i())
+  @project = Project.find(params.fetch('id').to_i())
+  @project.employees.destroy(@employee)
+  redirect("/projects/#{@project.id()}")
+end
+
 patch('/projects/:id') do
   @project = Project.find(params.fetch('id').to_i())
   @project.update({:name => params.fetch('project')})
-
   @employees = Employee.all()
   erb(:project)
 end
@@ -90,8 +96,39 @@ end
 post('/projects/:id/assign') do
   project_id = params.fetch('id').to_i()
   employee = Employee.find(params.fetch('employee_select').to_i())
-  employee.update({:project_ids => [project_id]})
+  current_project_ids = employee.project_ids
+  employee.update({:project_ids => current_project_ids.push(project_id)})
   @project = Project.find(project_id)
   @employees = Employee.all()
   redirect("/projects/#{project_id}")
+end
+
+get('/employees/:id') do
+  @employee = Employee.find(params.fetch('id').to_i())
+  @projects = Project.all()
+  erb(:employee)
+end
+
+patch('/employees/:id') do
+  @employee = Employee.find(params.fetch('id').to_i())
+  @employee.update({:name => params.fetch('employee')})
+  @projects = Project.all()
+  erb(:employee)
+end
+
+delete('/employees/:id/boot') do
+  @project = Project.find(params.fetch('project_id').to_i())
+  @employee = Employee.find(params.fetch('id').to_i())
+  @employee.projects.destroy(@project)
+  redirect("/employees/#{@employee.id()}")
+end
+
+post('/employees/:id/assign') do
+  employee_id = params.fetch('id').to_i()
+  project = Project.find(params.fetch('project_select').to_i())
+  current_employee_ids = project.employee_ids
+  project.update({:employee_ids => current_employee_ids.push(employee_id)})
+  @employee = Employee.find(employee_id)
+  @projects = Project.all()
+  redirect("/employees/#{employee_id}")
 end

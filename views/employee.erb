@@ -1,0 +1,53 @@
+<h1>Employee: <i><% @employee.id()%> <%= @employee.name()%></i></h1>
+
+<h3>Delete this Employee</h3>
+<form action="/employees/<%= @employee.id()%>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" name="button">Delete</button>
+</form>
+
+<h3>Update this Employee</h3>
+<form action="/employees/<%= @employee.id() %>" method="post">
+  <div class="form-group">
+    <input type="hidden" name="_method" value="patch">
+    <label for="employee">New Name</label>
+    <input type="text" name="employee" id="employee" class="form-control">
+  </div>
+  <button type="submit">Update</button>
+</form>
+
+<h3>Assign Employee to a project</h3>
+<form action="/employees/<%= @employee.id() %>/assign" method="post">
+  <div class="form-group">
+    <input type="hidden" name="_method" value="post">
+    <select id="project_select" name="project_select" class="form-control" type="text">
+
+      <% @projects.each() do |project| %>
+        <option id="option_<%= project.id() %>" value="<%= project.id() %>"><%= project.name() %></option>
+      <% end %>
+    </select>
+  </div>
+  <button type="submit">Assign</button>
+</form>
+
+
+
+<% if @projects.any?() %>
+<h3>Current Projects <%= @employee.name() %> is assigned to:</h3>
+
+  <ul>
+    <% @projects.each() do |project| %>
+      <% if project.employee_ids().include? @employee.id() %>
+        <li><a href="/projects/<%= project.id()%>"><%= project.name() %></a> <form action="/employees/<%= @employee.id()%>/boot" method="post">
+          <input type="hidden" name="project_id" value="<%= project.id() %>">
+          <input type="hidden" name="_method" value="delete">
+          <button type="submit" name="button">Delete</button>
+        </form></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% else %>
+  <p>
+    <%= @employee.name() %> isn't assigned to any projects yet!
+  </p>
+<% end %>

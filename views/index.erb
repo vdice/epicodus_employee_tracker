@@ -30,7 +30,8 @@
 
   <ul>
     <% @employees.each() do |employee| %>
-      <li><%= employee.name() %><% unless employee.division().nil? %>, Division: <%= employee.division().name() %><% end %>
+      <li><a href="/employees/<%= employee.id()%>"><%= employee.name() %></a><% unless employee.division().nil? %>, Division: <%= employee.division().name() %>
+        <% end %>
       </li>
     <% end %>
   </ul>

@@ -1,4 +1,4 @@
-<h1><% @project.id()%> <%= @project.name()%></h1>
+<h1>Project: <i><% @project.id()%> <%= @project.name()%></i></h1>
 
 <h3>Delete this Project</h3>
 <form action="/projects/<%= @project.id()%>" method="post">
@@ -38,8 +38,12 @@
 
   <ul>
     <% @employees.each() do |employee| %>
-      <% if employee.project_ids().eql?([@project.id()]) %>
-        <li><%= employee.name() %></li>
+      <% if employee.project_ids().include? @project.id() %>
+        <li><a href="/employees/<%= employee.id()%>"><%= employee.name() %></a> <form action="/projects/<%= @project.id()%>/boot" method="post">
+          <input type="hidden" name="_method" value="delete">
+          <input type="hidden" name="employee_id" value="<%= employee.id() %>">
+          <button type="submit" name="button">Delete</button>
+        </form></li>
       <% end %>
     <% end %>
   </ul>
