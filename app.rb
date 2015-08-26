@@ -68,6 +68,7 @@ end
 
 get('/projects/:id') do
   @project = Project.find(params.fetch('id').to_i())
+  @employees = Employee.all()
   erb(:project)
 end
 
@@ -81,5 +82,16 @@ end
 patch('/projects/:id') do
   @project = Project.find(params.fetch('id').to_i())
   @project.update({:name => params.fetch('project')})
+
+  @employees = Employee.all()
   erb(:project)
+end
+
+post('/projects/:id/assign') do
+  project_id = params.fetch('id').to_i()
+  employee = Employee.find(params.fetch('employee_select').to_i())
+  employee.update({:project_id => project_id})
+  @project = Project.find(project_id)
+  @employees = Employee.all()
+  redirect("/projects/#{project_id}")
 end

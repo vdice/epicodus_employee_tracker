@@ -24,9 +24,15 @@ require("spec_helper")
       test_project = Project.create({:name => 'epicodus employee tracker'})
       test_division = Division.create({:name => 'ruby class'})
       test_employee = Employee.create({:name => 'Vaughn', :project_id => test_project.id(), :division_id => test_division.id()})
+
       test_employee.update({:project_id => 'null'})
       expect(test_employee.project()).to(eq(nil))
       expect(test_project.employees()).to(eq([]))
+
+      test_employee.update({:project_id => test_project.id()})
+      test_project = Project.find(test_project.id())
+      expect(test_employee.project()).to(eq(test_project))
+      expect(test_project.employees()).to(eq([test_employee]))
     end
   end
 end

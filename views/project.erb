@@ -1,10 +1,12 @@
 <h1><% @project.id()%> <%= @project.name()%></h1>
 
+<h3>Delete this Project</h3>
 <form action="/projects/<%= @project.id()%>" method="post">
   <input type="hidden" name="_method" value="delete">
   <button type="submit" name="button">Delete</button>
 </form>
 
+<h3>Update this Project</h3>
 <form action="/projects/<%= @project.id() %>" method="post">
   <div class="form-group">
     <input type="hidden" name="_method" value="patch">
@@ -13,3 +15,36 @@
   </div>
   <button type="submit">Update</button>
 </form>
+
+<h3>Assign Employee to this project</h3>
+<form action="/projects/<%= @project.id() %>/assign" method="post">
+  <div class="form-group">
+    <input type="hidden" name="_method" value="post">
+    <select id="employee_select" name="employee_select" class="form-control" type="text">
+
+      <% @employees.each() do |employee| %>
+        <option id="option_<%= employee.id() %>" value="<%= employee.id() %>"><%= employee.name() %></option>
+      <% end %>
+
+    </select>
+  </div>
+  <button type="submit">Assign</button>
+</form>
+
+
+
+<% if @employees.any?() %>
+<h3>Current Employees assigned to <%= @project.name() %>:</h3>
+
+  <ul>
+    <% @employees.each() do |employee| %>
+      <% if employee.project_id().eql?(@project.id()) %>
+        <li><%= employee.name() %></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% else %>
+  <p>
+    <%= @project.name() %> doesn't have any employees yet!
+  </p>
+<% end %>

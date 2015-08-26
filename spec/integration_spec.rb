@@ -83,4 +83,16 @@ describe('employee tracker app', {:type => :feature}) do
       expect(page).to have_content('AR Many to Many')
     end
   end
+
+  describe('add employees to a project') do
+    it('allows the user to add employees to a project') do
+      project = Project.create({:name => 'Active Record Many to Many'})
+      employee = Employee.create({:name => 'Toma'})
+      employee1 = Employee.create({:name => 'Vaughn'})
+      visit("/projects/#{project.id()}")
+      find('#employee_select').find("#option_#{employee.id()}").select_option
+      click_button('Assign')
+      expect(page).to have_content(employee.name())
+    end
+  end
 end
