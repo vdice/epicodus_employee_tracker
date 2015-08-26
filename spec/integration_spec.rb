@@ -57,10 +57,30 @@ describe('employee tracker app', {:type => :feature}) do
 
   describe('create a project') do
     it('names a project') do
-      visit("/projects/")
+      visit("/projects")
       fill_in('project', :with => 'Active Record Many to Many')
       click_button('Save')
       expect(page).to have_content('Active Record Many to Many')
+    end
+  end
+
+  describe('delete a project') do
+    it('allows a user to delete a project') do
+      project = Project.create({:name => 'Active Record Many to Many'})
+      visit("/projects")
+      click_link(project.name())
+      click_button('Delete')
+      expect(page).to_not have_content(project.name())
+    end
+  end
+
+  describe('update a project') do
+    it('allows a user to update the name of a project') do
+      project = Project.create({:name => 'Active Record Many to Many'})
+      visit("/projects/#{project.id()}")
+      fill_in('project', :with => 'AR Many to Many')
+      click_button('Update')
+      expect(page).to have_content('AR Many to Many')
     end
   end
 end

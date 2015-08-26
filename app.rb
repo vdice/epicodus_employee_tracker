@@ -54,7 +54,7 @@ delete('/divisions/:id') do
   redirect('/')
 end
 
-get('/projects/') do
+get('/projects') do
   @projects = Project.all()
   erb(:projects)
 end
@@ -64,4 +64,22 @@ post('/projects') do
   project = Project.create({:name => name})
   @projects = Project.all()
   erb(:projects)
+end
+
+get('/projects/:id') do
+  @project = Project.find(params.fetch('id').to_i())
+  erb(:project)
+end
+
+delete('/projects/:id') do
+  @project = Project.find(params.fetch('id').to_i())
+  @project.delete()
+  @projects = Project.all()
+  redirect('/projects')
+end
+
+patch('/projects/:id') do
+  @project = Project.find(params.fetch('id').to_i())
+  @project.update({:name => params.fetch('project')})
+  erb(:project)
 end
