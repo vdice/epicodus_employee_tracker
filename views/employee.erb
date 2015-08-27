@@ -10,15 +10,21 @@
 
 <% if @projects.any?() %>
 <h5>Projects</h5>
-  <ul>
+  <ul class="fa-ul">
     <% @projects.each() do |project| %>
       <% if project.employee_ids().include? @employee.id() %>
-        <li><a href="/projects/<%= project.id()%>"><%= project.name() %></a>
-          <form action="/employees/<%= @employee.id()%>/boot" method="post">
+
+<li> <i class="fa-li fa fa-cogs"></i><a href="/projects/<%= project.id()%>"><%= project.name() %></a>
+
+          <form class="form-inline" role="form" action="/employees/<%= @employee.id()%>/boot" method="post">
+            <div class="form-group">
           <input type="hidden" name="project_id" value="<%= project.id() %>">
           <input type="hidden" name="_method" value="delete">
-          <button class="btn btn-danger" type="submit" name="button">Delete</button>
-        </form></li>
+        </div>
+
+        <button class="btn btn-danger" type="submit" name="button"><i class="fa fa-trash"></i></button>
+
+      </form></li>
       <% end %>
     <% end %>
   </ul>
@@ -31,7 +37,7 @@
 <h3>Delete this Employee</h3>
 <form class="form-inline" action="/employees/<%= @employee.id()%>" method="post">
   <input type="hidden" name="_method" value="delete">
-  <button class="btn btn-danger form-control" type="submit" name="button">Delete</button>
+  <button class="btn btn-danger" type="submit" name="button"><i class="fa fa-trash"></i></button>
 </form>
 
 <h3>Update this Employee</h3>
@@ -39,9 +45,9 @@
   <div class="form-group">
     <input type="hidden" name="_method" value="patch">
     <label for="employee">New Name</label>
-    <input type="text" name="employee" id="employee" class="form-control">
+    <input type="text" name="employee" id="employee" class="form-control" required>
   </div>
-  <button type="submit">Update</button>
+  <button class="btn btn-info" type="submit">Update</button>
 </form>
 
 <h3>Assign Employee to a project</h3>
@@ -55,7 +61,7 @@
       <% end %>
     </select>
   </div>
-  <button type="submit">Assign</button>
+  <button class="btn btn-success" type="submit">Assign</button>
 </form>
 
 <h3>Assign Employee to a division</h3>
@@ -69,5 +75,5 @@
         <% end %>
       </select>
   </div>
-<button type="submit">Assign</button>
+<button class="btn btn-success" type="submit">Assign</button>
 </form>
