@@ -14,33 +14,43 @@ get('/') do
   erb(:index)
 end
 
+
 post('/') do
   @divisions = Division.all()
   @employees = Employee.all()
-
-  if (params.has_key?('name'))
-    name = params.fetch('name')
-    Division.create({:name => name})
-  end
-
-  if (params.has_key?('employee') && params.has_key?('division_select'))
-    employee_name = params.fetch('employee')
-    division_id = params.fetch('division_select').to_i
-    employee = Employee.create({:name => employee_name, :division_id => division_id})
-  end
-
-  erb(:index)
+erb(:index)
 end
 
+# Divisions - list all, Create, modify and delete
+
+get('/divisions') do
+  @divisions = Division.all()
+  erb(:divisions)
+end
+
+post('/divisions') do
+  name = params.fetch('name')
+  Division.create({:name => name})
+  @divisions = Division.all()
+  erb(:divisions)
+end
 
 get('/divisions/:id') do
+  @employees = Employee.all()
   @division = Division.find(params.fetch("id").to_i)
   erb(:division)
 end
 
+post('/divisions/:id/employee') do
+  division_id = params.fetch('id').to_i()
+  employee = Employee.find(params.fetch('employee_select').to_i())
+  employee.update({:division_id => division_id})
+  @division = Division.find(division_id)
+  redirect("/divisions/#{division_id}")
+end
+
 patch('/divisions/:id') do
   name = params.fetch('division')
-
   @division = Division.find(params.fetch('id').to_i)
   @division.update({:name => name})
   erb(:division)
@@ -53,6 +63,17 @@ delete('/divisions/:id') do
   @employees = Employee.all()
   redirect('/')
 end
+
+post('/employees/:id/division') do
+  employee_id = params.fetch('id').to_i()
+  division = Division.find(params.fetch('division_select').to_i())
+  current_employee_ids = division.employee_ids
+  division.update({:employee_ids => current_employee_ids.push(employee_id)})
+  @employee = Employee.find(employee_id)
+  redirect("/employees/#{employee_id}")
+end
+
+# Projects - list all, Create, Modify and Delete
 
 get('/projects') do
   @projects = Project.all()
@@ -103,13 +124,34 @@ post('/projects/:id/assign') do
   redirect("/projects/#{project_id}")
 end
 
+# Employees  list all, create, modify and delete
+
 get('/employees/:id') do
   @employee = Employee.find(params.fetch('id').to_i())
   @projects = Project.all()
+  @divisions = Division.all()
   erb(:employee)
 end
 
+get('/employees') do
+  @employees = Employee.all()
+  @projects = Project.all()
+  @divisions = Division.all
+  erb(:employees)
+end
+
+post('/employees') do
+  if (params.has_key?('employee'))
+    employee_name = params.fetch('employee')
+    employee = Employee.create({:name => employee_name})
+  end
+
+  @employees = Employee.all()
+  erb(:employees)
+end
+
 patch('/employees/:id') do
+  @divisions = Division.all()
   @employee = Employee.find(params.fetch('id').to_i())
   @employee.update({:name => params.fetch('employee')})
   @projects = Project.all()
@@ -117,13 +159,14 @@ patch('/employees/:id') do
 end
 
 delete('/employees/:id/boot') do
+
   @project = Project.find(params.fetch('project_id').to_i())
   @employee = Employee.find(params.fetch('id').to_i())
-  @employee.projects.destroy(@project)
+  @project.employees.destroy(@employee)
   redirect("/employees/#{@employee.id()}")
 end
 
-post('/employees/:id/assign') do
+post('/employees/:id/project') do
   employee_id = params.fetch('id').to_i()
   project = Project.find(params.fetch('project_select').to_i())
   current_employee_ids = project.employee_ids
@@ -131,4 +174,10 @@ post('/employees/:id/assign') do
   @employee = Employee.find(employee_id)
   @projects = Project.all()
   redirect("/employees/#{employee_id}")
+end
+
+delete('/employees/:id') do
+  employee = Employee.find(params.fetch('id').to_i())
+  employee.destroy()
+  redirect('/employees')
 end

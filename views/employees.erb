@@ -1,0 +1,33 @@
+<% if @employees.any?() %>
+  <p>
+    Here are all your employees:
+  </p>
+
+  <ul>
+    <% @employees.each() do |employee| %>
+      <li><a href="/employees/<%= employee.id()%>"><%= employee.name() %></a>
+      </li>
+    <% end %>
+  </ul>
+
+<% else %>
+  <p>
+    You don't have any employees yet!
+  </p>
+<% end %>
+
+<p>
+  Please enter new employee details here:
+</p>
+
+<form action="/employees" method="post">
+  <div class="form-group">
+    <label for="employee">Name</label>
+    <input type="text" name="employee" id="employee" class="form-control" required>
+
+
+
+  </div>
+
+  <button type="submit">Create</button>
+</form>

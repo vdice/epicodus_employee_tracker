@@ -1,64 +1,13 @@
 <center>
   <h1>Employee Tracker</h1>
 </center>
-<a href="/projects">Projects</a>
+<h4><a href="/employees">Employees</a></h4>
+<h4><a href="/projects">Projects</a></h4>
+<h4><a href="/divisions">Divisions</a></h4>
 <p>
-  Here are all your divisions:
+  Here are all your staff:
 </p>
 
 <ul>
-  <% @divisions.each() do |division| %>
-    <li><a href="/divisions/<%= division.id %>"><%= division.name %></a></li>
-  <% end %>
+
 </ul>
-
-<p>
-  Please enter your division here:
-</p>
-<form action="/" method="post">
-  <div class="form-group">
-  <label for="name">New Division Name:</label>
-  <input type="text" name="name" id="name" class="form-control">
-  </div>
-  <button name="button" class="btn" type="submit">Submit</button>
-</form>
-
-<% if @employees.any?() %>
-  <p>
-    Here are all your employees:
-  </p>
-
-  <ul>
-    <% @employees.each() do |employee| %>
-      <li><a href="/employees/<%= employee.id()%>"><%= employee.name() %></a><% unless employee.division().nil? %>, Division: <%= employee.division().name() %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-
-<% else %>
-  <p>
-    You don't have any employees yet!
-  </p>
-<% end %>
-
-<p>
-  Please enter new employee details here:
-</p>
-
-<form action="/" method="post">
-  <div class="form-group">
-    <label for="employee">Name</label>
-    <input type="text" name="employee" id="employee" class="form-control">
-
-
-    <label for="division">Division</label>
-    <select id="division_select" name="division_select" type="text" class="form-control" required>
-      <% @divisions.each() do |division| %>
-        <option id="option_<%= division.id() %>" value="<%= division.id() %>"><%= division.name() %></option>
-      <% end %>
-    </select>
-  </div>
-
-  <button type="submit">Create</button>
-</form>
