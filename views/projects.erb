@@ -1,10 +1,10 @@
 <p>
-  Here are all your prjects:
+  Here are all your projects:
 </p>
 
-<ul>
+<ul class="fa-ul">
   <% @projects.each() do |project| %>
-    <li><a href="/projects/<%= project.id %>"><%= project.name %></a></li>
+    <li><i class="fa-li fa fa-cogs"></i><a href="/projects/<%= project.id %>"><%= project.name %></a></li>
   <% end %>
 </ul>
 

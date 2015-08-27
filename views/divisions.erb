@@ -1,9 +1,9 @@
 Here are all your divisions:
 </p>
 
-<ul>
+<ul class="fa-ul">
 <% @divisions.each() do |division| %>
-  <li><a href="/divisions/<%= division.id %>"><%= division.name %></a></li>
+  <li><i class="fa-li fa fa-building"></i><a href="/divisions/<%= division.id %>"><%= division.name %></a></li>
 <% end %>
 </ul>
 
@@ -18,5 +18,3 @@ Please enter your division here:
 <button name="button" class="btn" type="submit">Submit</button>
 </form>
 <p>
-
-  

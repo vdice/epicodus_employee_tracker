@@ -3,9 +3,9 @@
     Here are all your employees:
   </p>
 
-  <ul>
+  <ul class="fa-ul">
     <% @employees.each() do |employee| %>
-      <li><a href="/employees/<%= employee.id()%>"><%= employee.name() %></a>
+      <li><i class="fa-li fa fa-user"></i><a href="/employees/<%= employee.id()%>"><%= employee.name() %></a>
       </li>
     <% end %>
   </ul>
